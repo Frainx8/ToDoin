@@ -38,8 +38,9 @@
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.CommentTextBox = new System.Windows.Forms.RichTextBox();
             this.TaskTextBox = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.MainFLP = new System.Windows.Forms.FlowLayoutPanel();
             this.numUDPriority = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxTime = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numUDPriority)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +63,7 @@
             this.btnAddTask.TabIndex = 8;
             this.btnAddTask.Text = "Добавить задачу";
             this.btnAddTask.UseVisualStyleBackColor = true;
+            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
             // 
             // labelAddTask
             // 
@@ -136,28 +138,64 @@
             this.TaskTextBox.Name = "TaskTextBox";
             this.TaskTextBox.Size = new System.Drawing.Size(325, 20);
             this.TaskTextBox.TabIndex = 16;
+            this.TaskTextBox.TextChanged += new System.EventHandler(this.TaskTextBox_TextChanged);
             // 
-            // flowLayoutPanel
+            // MainFLP
             // 
-            this.flowLayoutPanel.Location = new System.Drawing.Point(374, 52);
-            this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(414, 386);
-            this.flowLayoutPanel.TabIndex = 17;
+            this.MainFLP.AutoScroll = true;
+            this.MainFLP.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MainFLP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainFLP.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.MainFLP.Location = new System.Drawing.Point(374, 52);
+            this.MainFLP.Name = "MainFLP";
+            this.MainFLP.Size = new System.Drawing.Size(414, 386);
+            this.MainFLP.TabIndex = 17;
+            this.MainFLP.WrapContents = false;
+            this.MainFLP.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel_Paint);
             // 
             // numUDPriority
             // 
             this.numUDPriority.Location = new System.Drawing.Point(74, 307);
+            this.numUDPriority.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numUDPriority.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numUDPriority.Name = "numUDPriority";
             this.numUDPriority.Size = new System.Drawing.Size(32, 20);
             this.numUDPriority.TabIndex = 18;
+            this.numUDPriority.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numUDPriority.ValueChanged += new System.EventHandler(this.numUDPriority_ValueChanged);
+            // 
+            // checkBoxTime
+            // 
+            this.checkBoxTime.AutoSize = true;
+            this.checkBoxTime.Checked = true;
+            this.checkBoxTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxTime.Location = new System.Drawing.Point(332, 273);
+            this.checkBoxTime.Name = "checkBoxTime";
+            this.checkBoxTime.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxTime.TabIndex = 19;
+            this.checkBoxTime.UseVisualStyleBackColor = true;
+            this.checkBoxTime.CheckedChanged += new System.EventHandler(this.checkBoxTime_CheckedChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBoxTime);
             this.Controls.Add(this.numUDPriority);
-            this.Controls.Add(this.flowLayoutPanel);
+            this.Controls.Add(this.MainFLP);
             this.Controls.Add(this.TaskTextBox);
             this.Controls.Add(this.CommentTextBox);
             this.Controls.Add(this.dateTimePicker);
@@ -188,8 +226,9 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.RichTextBox CommentTextBox;
         private System.Windows.Forms.TextBox TaskTextBox;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
+        private System.Windows.Forms.FlowLayoutPanel MainFLP;
         private System.Windows.Forms.NumericUpDown numUDPriority;
+        private System.Windows.Forms.CheckBox checkBoxTime;
     }
 }
 
