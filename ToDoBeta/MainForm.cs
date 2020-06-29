@@ -13,14 +13,20 @@ namespace ToDoBeta
 {
     public partial class MainForm : Form
     {
+        List<TasksModel> tasks;
+        int lastID = 0;
         public MainForm()
         {
             InitializeComponent();
-            //List<TasksModel> tasks = SqliteDataAccess.LoadTasks();
-            //foreach(var task in tasks)
-            //{
-            //    AddTaskToThePanel(task);
-            //}
+            tasks = SqliteDataAccess.LoadTasks();
+            foreach (var task in tasks)
+            {
+                AddTaskToThePanel(task);
+            }
+            if(tasks.Count > 0)
+            {
+                lastID = tasks[tasks.Count - 1].ID;
+            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -39,10 +45,6 @@ namespace ToDoBeta
             box.FlowDirection = FlowDirection.LeftToRight;
             box.Size = new Size(385, 30);
             box.BorderStyle = BorderStyle.FixedSingle;
- 
-
-
-
 
             Label labelTask = new Label();
             labelTask.Text = task.Task;
@@ -73,23 +75,36 @@ namespace ToDoBeta
 
 
             CheckBox IsDone = new CheckBox();
+            IsDone.Name = "checkB#" + task.ID.ToString();
+            IsDone.CheckedChanged += new EventHandler(DeleteTask);
             box.Controls.Add(IsDone);
 
             MainFLP.Controls.Add(box);
         }
+        private void DeleteTask(object sender, EventArgs e)
+        {
+            CheckBox theBox = (CheckBox)sender;
+            int id = Int32.Parse(theBox.Name.Substring(7));
+            TasksModel task = new TasksModel();
+            task.ID = id;
+            SqliteDataAccess.DeleteTask(task);
+            MainFLP.Controls.Remove(theBox.Parent);
+        }
+
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
             if(String.IsNullOrWhiteSpace(TaskTextBox.Text) != true)
             {
                 TasksModel task;
+                lastID++;
                 if (checkBoxTime.CheckState == CheckState.Checked)
                 {
-                    task = new TasksModel(TaskTextBox.Text, CommentTextBox.Text, Convert.ToInt32(numUDPriority.Value), dateTimePicker.Value.ToShortDateString());
+                    task = new TasksModel(lastID, TaskTextBox.Text, CommentTextBox.Text, Convert.ToInt32(numUDPriority.Value), dateTimePicker.Value.ToShortDateString());
                 }
                 else
                 {
-                    task = new TasksModel(TaskTextBox.Text, CommentTextBox.Text, Convert.ToInt32(numUDPriority.Value));
+                    task = new TasksModel(lastID, TaskTextBox.Text, CommentTextBox.Text, Convert.ToInt32(numUDPriority.Value));
                 }
                 SqliteDataAccess.SaveTask(task);
                 AddTaskToThePanel(task);

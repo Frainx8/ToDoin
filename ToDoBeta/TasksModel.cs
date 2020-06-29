@@ -36,12 +36,15 @@ namespace ToDoBeta
         }
         public string TimeToDo { get; set; }
 
-        public TasksModel(string task, string Comment = "", int Priority = 5, string TimeToDo = null)
+        public TasksModel(int ID, string task, string Comment = "", int Priority = 5, string TimeToDo = null)
         {
+            this.ID = ID;
             Task = task;
             this.Comment = Comment;
             this.Priority = Priority;
             this.TimeToDo = TimeToDo;
         }
+
+        public TasksModel() { }
     }
 }

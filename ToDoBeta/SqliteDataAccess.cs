@@ -17,8 +17,8 @@ namespace ToDoBeta
         {
             using(IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<TasksModel>("select * from Tasks", new DynamicParameters());
-                return output.ToList();
+                List<TasksModel> tasks = cnn.Query<TasksModel>("select * from Tasks", new DynamicParameters()).ToList();
+                return tasks;
             }
         }
 
@@ -26,7 +26,15 @@ namespace ToDoBeta
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("insert into Tasks (Task, Comment, Priority, TimeToDo) values (@Task, @Comment, @Priority, @TimeToDo)", task);
+                cnn.Execute("insert into Tasks (ID, Task, Comment, Priority, TimeToDo) values (@ID, @Task, @Comment, @Priority, @TimeToDo);", task);
+            }
+        }
+
+        public static void DeleteTask(TasksModel task)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("Delete From Tasks WHERE ID = @ID", task);
             }
         }
 
