@@ -17,8 +17,16 @@ namespace ToDoBeta
         {
             using(IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                List<TasksModel> tasks = cnn.Query<TasksModel>("select * from Tasks", new DynamicParameters()).ToList();
+                List<TasksModel> tasks = cnn.Query<TasksModel>("select * from Tasks").ToList();
                 return tasks;
+            }
+        }
+
+        public static TasksModel LoadATask(TasksModel task)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                return cnn.Query<TasksModel>("select * from Tasks WHERE ID = @ID", task).First();
             }
         }
 

@@ -53,8 +53,10 @@ namespace ToDoBeta
             box.Controls.Add(labelTask);
 
             Button comment = new Button();
+            comment.BackColor = SystemColors.ActiveCaption;
+            comment.Name = "btn#" + task.ID.ToString();
             comment.Size = new Size(20, 20);
-            //Do Comment window
+            comment.Click += new EventHandler(ShowFullTask);
             box.Controls.Add(comment);
 
             Label priority = new Label();
@@ -80,6 +82,18 @@ namespace ToDoBeta
             box.Controls.Add(IsDone);
 
             MainFLP.Controls.Add(box);
+        }
+
+        private void ShowFullTask(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int id = Int32.Parse(btn.Name.Substring(4));
+            TasksModel emptyTask = new TasksModel();
+            emptyTask.ID = id;
+            TasksModel task = SqliteDataAccess.LoadATask(emptyTask);
+            FullTask fullTask = new FullTask();
+            fullTask.ChangeValues(task);
+            fullTask.Show();
         }
         private void DeleteTask(object sender, EventArgs e)
         {

@@ -59,6 +59,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FullTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FullTask.Designer.cs">
+      <DependentUpon>FullTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqliteDataAccess.cs" />
     <Compile Include="TasksModel.cs" />
+    <EmbeddedResource Include="FullTask.resx">
+      <DependentUpon>FullTask.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
